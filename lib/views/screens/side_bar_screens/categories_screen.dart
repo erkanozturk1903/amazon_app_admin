@@ -1,3 +1,4 @@
+import 'package:amazon_app_admin/views/screens/side_bar_screens/widgets/category_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -41,27 +42,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     UploadTask uploadTask = ref.putData(image);
 
     TaskSnapshot snapshot = await uploadTask;
-   String downloadUrl =  await snapshot.ref.getDownloadURL();
-   return downloadUrl;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 
-
-
-  uploadCategory() async{
+  uploadCategory() async {
     EasyLoading.show();
     if (_formKey.currentState!.validate()) {
-     String imageUrl =  await _uploadCategoryBannerToStorage(_image);
-     await _firestore.collection('categories')
-     .doc(fileName!)
-     .set({
-       'image' : imageUrl,
-       'categoryName' : categoryName
-     }).whenComplete((){
-       EasyLoading.dismiss();
-       setState(() {
-         _image = null;
-       });
-     });
+      String imageUrl = await _uploadCategoryBannerToStorage(_image);
+      await _firestore.collection('categories').doc(fileName!).set(
+          {'image': imageUrl, 'categoryName': categoryName}).whenComplete(() {
+        EasyLoading.dismiss();
+        setState(() {
+          _image = null;
+          _formKey.currentState!.reset();
+        });
+      });
     } else {
       print('İşler Kötü');
     }
@@ -131,7 +127,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: SizedBox(
                     width: 180,
                     child: TextFormField(
-                      onChanged: (value){
+                      onChanged: (value) {
                         categoryName = value;
                       },
                       validator: (value) {
@@ -161,7 +157,29 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: Text('Kaydet'),
                 )
               ],
-            )
+            ),
+            Divider(
+              color: Colors.grey,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Kategori',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left:20.0),
+              child: CategoriesWidget(
+
+              ),
+            ),
           ],
         ),
       ),

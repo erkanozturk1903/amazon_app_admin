@@ -1,3 +1,4 @@
+import 'package:amazon_app_admin/views/screens/side_bar_screens/widgets/banner_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,7 +14,7 @@ class UploadBannerScreen extends StatefulWidget {
 }
 
 class _UploadBannerScreenState extends State<UploadBannerScreen> {
- final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   dynamic _image;
@@ -40,15 +41,13 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
     return downloadUrl;
   }
 
- uploadToFireStore() async{
+  uploadToFireStore() async {
     EasyLoading.show();
-    if(_image != null){
-     String imageUrl  =await  _uploadBannersToStorage(_image);
-      await _firestore.collection('banners')
-     .doc(fileName)
-     .set({
-        'image' : imageUrl,
-      }).whenComplete((){
+    if (_image != null) {
+      String imageUrl = await _uploadBannersToStorage(_image);
+      await _firestore.collection('banners').doc(fileName).set({
+        'image': imageUrl,
+      }).whenComplete(() {
         EasyLoading.dismiss();
         setState(() {
           _image = null;
@@ -128,7 +127,21 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
                 child: Text('Kaydet'),
               )
             ],
-          )
+          ),
+          Divider(
+            color: Colors.grey,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Banners',
+                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          BannersWidget()
         ],
       ),
     );
