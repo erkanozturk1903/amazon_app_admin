@@ -175,10 +175,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left:20.0),
-              child: CategoriesWidget(
-
-              ),
+              padding: const EdgeInsets.only(left: 20.0),
+              child: CategoriesWidget(),
             ),
           ],
         ),

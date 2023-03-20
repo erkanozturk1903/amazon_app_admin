@@ -1,3 +1,4 @@
+import 'package:amazon_app_admin/views/screens/side_bar_screens/widgets/vendor_widget.dart';
 import 'package:flutter/material.dart';
 
 class VendorScreen extends StatelessWidget {
@@ -42,13 +43,14 @@ class VendorScreen extends StatelessWidget {
           Row(
             children: [
               _rowHeader('LOGO', 1),
-              _rowHeader('DÜKKAN İSMİ', 3),
+              _rowHeader('MAĞAZA İSMİ', 3),
               _rowHeader('İLÇE', 2),
               _rowHeader('İL', 2),
               _rowHeader('AKTİF', 1),
               _rowHeader('DETAY', 1),
             ],
-          )
+          ),
+          VendorWidget()
         ],
       ),
     );
